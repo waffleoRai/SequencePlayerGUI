@@ -165,4 +165,6 @@ public class NinSeqRegisterViewPanel extends JPanel implements NinSeqPlayerValue
 		}
 	}
 	
+	public short[] getValues(){return pnlTable.getValues();}
+	
 }
