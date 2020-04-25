@@ -16,6 +16,7 @@ import waffleoRai_Sound.nintendo.DSWarc;
 import waffleoRai_Utils.FileBuffer;
 import waffleoRai_seqplayerGUI.ninseq.NinSeqRegisterViewPanel;
 import waffleoRai_soundbank.nintendo.DSBank;
+import waffleoRai_soundbank.sf2.SF2;
 import waffleoRai_soundbank.vab.PSXVAB;
 
 public class Test {
@@ -29,7 +30,9 @@ public class Test {
 		String inbank_body = "C:\\Users\\Blythe\\Documents\\Game Stuff\\PSX\\GameData\\SLPM87176\\SE\\SE_000.bnkp\\SE_000_vab.vb";
 		
 		//Awright, let's try DS...
-		String insdat = "C:\\Users\\Blythe\\Documents\\Desktop\\Notes\\spirit_tracks.sdat";
+		String insdat = "C:\\Users\\Blythe\\Documents\\Desktop\\Notes\\pkmn_pearl.sdat";
+		String outmid = "C:\\Users\\Blythe\\Documents\\Desktop\\out\\ds_test\\cynthia.mid";
+		String outsf2 = "C:\\Users\\Blythe\\Documents\\Desktop\\out\\ds_test\\dp_battle.sf2";
 		
 		try
 		{
@@ -43,14 +46,29 @@ public class Test {
 			
 			DSSoundArchive arc = DSSoundArchive.readSDAT(insdat);
 			arc.setSourceLocation(insdat, 0);
-			int swar_idx = 0;
-			DSWarc swar = arc.getSWAR(swar_idx);
-			int sbnk_idx = 5;
+			
+			//Figure out where the files of interest are
+			
+			int sseq_idx = 1122;
+			int sbnk_idx = 1002;
+			int swar0_idx = 1000;
+			int swar1_idx = 1002;
+			
+			DSWarc swar0 = arc.getSWAR(swar0_idx);
+			DSWarc swar1 = arc.getSWAR(swar1_idx);
 			DSBank sbnk = arc.getSBNK(sbnk_idx);
-			int sseq_idx = 18;
 			DSSeq seq = arc.getSSEQ(sseq_idx);
-			NinSeqSynthPlayer player = new NinSeqSynthPlayer(seq.getSequenceData(), sbnk.generatePlayableBank(swar, 0), 0);
-			player.setVariableValue(0, (short)17);
+			DSWarc[] warcs = {swar0, swar1};
+			
+			//arc.printTypeViewToStdOut();
+			//sbnk.printInfo();
+			//SF2.writeSF2(sbnk.toSoundbank(warcs, 0, "DPBattle"), "NTDExplorer", false, outsf2);
+			//seq.writeMIDI(outmid, true);
+			//System.exit(2);
+			
+			NinSeqSynthPlayer player = new NinSeqSynthPlayer(seq.getSequenceData(), sbnk.generatePlayableBank(warcs, 0), 0);
+			player.debugTagChannel(2, true);
+			//player.setVariableValue(0, (short)17);
 			
 			//Generate custom panel
 			NinSeqRegisterViewPanel nspnl = new NinSeqRegisterViewPanel();
