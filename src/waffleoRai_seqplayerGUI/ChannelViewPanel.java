@@ -846,6 +846,18 @@ public class ChannelViewPanel extends JPanel implements ChannelStateListener, Ac
 		btnSolo.repaint();
 	}
 	
-
+	/*----- Memory -----*/
+	
+	public void dispose(){
+		pnlVox.clear();
+		if(timer.isRunning()) timer.stop();
+		if(callbacks != null){
+			for(Queue<CallbackEvent> v : callbacks.values()) v.clear();
+		}
+		callbacks.clear();
+		if(player != null){
+			player.removeChannelListener(channel_idx, this);
+		}
+	}
 	
 }

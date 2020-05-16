@@ -457,6 +457,14 @@ public class MasterPanel extends JPanel implements PlayerListener, ActionListene
 				
 	}
 	
+	public void refresh(){
+		txtSeqName.setText(player.getSequenceName());
+		txtSeqName.repaint();
+		
+		txtBankName.setText(player.getBankName());
+		txtBankName.repaint();
+	}
+	
 	/*----- Listeners -----*/
 	
 	private void addToMap(long time, CallbackEvent e){
@@ -558,6 +566,17 @@ public class MasterPanel extends JPanel implements PlayerListener, ActionListene
 		listeners.clear();
 	}
 	
+	public void onSequenceEnd() {
+		playing = false;
+		timer.stop();
+		
+		player.rewind();
+		rewind();
+		btnPlay.setIcon(ico_play);
+		btnPlay.repaint();
+		for(PlayControlListener l : listeners) l.onStop();
+	}
+	
 	/*----- Actions -----*/
 	
 	private void rewind(){
@@ -612,6 +631,7 @@ public class MasterPanel extends JPanel implements PlayerListener, ActionListene
 		btnPlay.setIcon(ico_play);
 		btnPlay.repaint();
 		for(PlayControlListener l : listeners) l.onStop();
+		//System.err.println("onStop() returning");
 	}
 	
 	public void onRewind(){
@@ -663,11 +683,26 @@ public class MasterPanel extends JPanel implements PlayerListener, ActionListene
 		//System.err.println("Volume set to: " + player.getMasterAttenuation());
 	}
 
+	/*----- Cleanup -----*/
+	
+	public void dispose(){
+		if(timer.isRunning()) timer.stop();
+		if(callbacks != null){
+			for(Queue<CallbackEvent> v : callbacks.values()) v.clear();
+		}
+		callbacks.clear();
+		
+		//Delist listeners
+		if(player != null)player.removeListener(this);
+	}
+	
 	/*----- Error -----*/
 	
 	public void showError(String text){
 		JOptionPane.showMessageDialog(this, text, "Error", JOptionPane.ERROR_MESSAGE);
 	}
+
+	
 
 
 	

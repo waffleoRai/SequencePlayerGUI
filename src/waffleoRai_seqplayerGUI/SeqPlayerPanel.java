@@ -171,4 +171,14 @@ public class SeqPlayerPanel extends JPanel implements PlayControlListener{
 		for(ChannelViewPanel p : chpnls) p.reset();
 	}
 	
+	public void refresh(){
+		pnlMaster.refresh();
+	}
+
+	public void dispose(){
+		pnlMaster.dispose();
+		for(int i = 0; i < chpnls.length; i++){
+			if(chpnls[i] != null) chpnls[i].dispose();
+		}
+	}
 }

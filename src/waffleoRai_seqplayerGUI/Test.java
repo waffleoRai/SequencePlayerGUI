@@ -31,7 +31,7 @@ public class Test {
 		
 		//Awright, let's try DS...
 		String insdat = "C:\\Users\\Blythe\\Documents\\Desktop\\Notes\\pkmn_pearl.sdat";
-		String outmid = "C:\\Users\\Blythe\\Documents\\Desktop\\out\\ds_test\\cynthia.mid";
+		String outmid = "C:\\Users\\Blythe\\Documents\\Desktop\\out\\ds_test\\dp_wildpoke.mid";
 		String outsf2 = "C:\\Users\\Blythe\\Documents\\Desktop\\out\\ds_test\\dp_battle.sf2";
 		
 		try
@@ -49,7 +49,11 @@ public class Test {
 			
 			//Figure out where the files of interest are
 			
-			int sseq_idx = 1122;
+			//String sseq_name = "SEQ_BA_POKE";
+			//System.err.println("Index: " + arc.getSSEQIndex(sseq_name));
+			//System.exit(2);
+			
+			int sseq_idx = 1116;
 			int sbnk_idx = 1002;
 			int swar0_idx = 1000;
 			int swar1_idx = 1002;
@@ -67,6 +71,8 @@ public class Test {
 			//System.exit(2);
 			
 			NinSeqSynthPlayer player = new NinSeqSynthPlayer(seq.getSequenceData(), sbnk.generatePlayableBank(warcs, 0), 0);
+			//player.play();
+			
 			player.debugTagChannel(2, true);
 			//player.setVariableValue(0, (short)17);
 			
