@@ -59,8 +59,8 @@ public class SMDTest {
 
 		String dirpath = "C:\\Users\\Blythe\\Documents\\Desktop\\out\\ds_test\\pokedun_bgm";
 		
-		String smd_path = dirpath + "\\bgm0025.smd";
-		String swd_path = dirpath + "\\bgm0025.swd";
+		String smd_path = dirpath + "\\bgm0024.smd";
+		String swd_path = dirpath + "\\bgm0024.swd";
 		String swd_warc_path = dirpath + "\\bgm.swd";
 		
 		try{
@@ -80,7 +80,8 @@ public class SMDTest {
 			dat = FileBuffer.createBuffer(swd_path, false);
 			SWD bank = SWD.readSWD(dat, 0);
 			bank.loadSoundDataFrom(warc);
-			//bank.writeSF2(dirpath + "\\bgm0025_debug.sf2");
+			//bank.debugPrint();
+			//bank.writeSF2(dirpath + "\\bgm0024_debug.sf2");
 			//System.exit(2);
 			
 			dat = FileBuffer.createBuffer(smd_path, false);
@@ -92,6 +93,7 @@ public class SMDTest {
 			//testplayback(prog, (byte)60);
 			
 			SMDPlayer player = new SMDPlayer(seq, bank);
+			//player.getChannel(8).tagMe(true, 8);
 			//System.err.println("yo");
 			//player.writeMixdownTo(dirpath + "\\bassapples2.wav", 1);
 			//System.exit(2);

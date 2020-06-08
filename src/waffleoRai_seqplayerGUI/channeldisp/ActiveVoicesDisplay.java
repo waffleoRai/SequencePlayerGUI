@@ -58,6 +58,10 @@ public class ActiveVoicesDisplay extends JPanel{
 	public void voiceOn(byte key){
 		String s = "+";
 		
+		//Toss if key is already being displayed
+		if(onmap.containsKey(key)) return;
+		if(pending.contains(key)) return;
+		
 		if(on_voices >= MAX_VOICES_DISPLAYED){
 			pending.add(key);
 			if(plus == null)
